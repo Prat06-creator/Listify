@@ -25,8 +25,17 @@ function Signup() {
       console.log("✅ Signup response:", res);
       if (res.isUserAlreadyExists){
         console.log("🔑 User exists, logging in...");
-        await login(email)
-        navigate("/dashboard")
+        try {
+            await login(email)
+            navigate("/dashboard");
+        } catch (loginError) {
+             if (loginError.response?.data?.message === "Please verify your email first") {
+            navigate("/emailAuthentication");
+          } else {
+            setError(loginError.response?.data?.message || "Login failed");
+          }
+        }
+        
       }else{
         navigate("/emailAuthentication")
       }
