@@ -2,7 +2,7 @@ import {create} from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./authStore.js";
 import axios from "axios";
-const API_URL="http://localhost:5000/api/brainDump";
+const API_URL=import.meta.env.VITE_BACKEND_URL + "/api/brainDump"
 export const useBrainDumpStore = create (persist((set,get)=>({
     entries:[],
     setEntries:(entries)=>{

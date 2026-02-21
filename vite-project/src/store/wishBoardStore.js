@@ -2,7 +2,7 @@ import {create} from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./authStore.js";
 import axios from "axios";
-const API_URL="http://localhost:5000/api/wishboard";
+const API_URL=import.meta.env.VITE_BACKEND_URL + "/api/wishBoard"
 export const useWishBoardStore = create ((set,get)=>({
     boards:[],
     setBoards: (boards) => set({ boards }),

@@ -2,7 +2,7 @@ import {create} from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./authStore.js";
 import axios from "axios";
-const API_URL="http://localhost:5000/api/sticky";
+const API_URL=import.meta.env.VITE_BACKEND_URL + "/api/sticky";
 export const useStickyStore = create (persist((set,get)=>({
     boards:[],
     setBoards: (boards) => set({ boards }),

@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { useAuthStore } from "./authStore.js";
 import axios from "axios";
 
-const API_URL="http://localhost:5000/api/todo";
+const API_URL=import.meta.env.VITE_BACKEND_URL + "/api/todo";
 export const useTodoStore = create (persist((set,get)=>({
     currentTodo:null,
     setCurrentTodo:(todo)=>{
