@@ -1,0 +1,31 @@
+
+
+
+
+:root {
+  
+
+  color-scheme: light dark;
+  
+  
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 500vh;
+  background-image: url('/9.png');
+  background-size: cover;
+  background-position: center;
+}
+
+
+

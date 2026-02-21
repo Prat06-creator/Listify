@@ -1,0 +1,237 @@
+@import url('https://fonts.cdnfonts.com/css/ica-rubrik-black');
+@import url('https://fonts.cdnfonts.com/css/poppins');
+.page {
+  background-color: #0a192f;
+  background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+  font-family: "Arbutus Slab", serif; 
+  position: relative;
+  overflow: hidden;
+}
+.page .navbar{
+   display:flex;
+}
+.page .heading {
+  height: 130px;
+  width: 800px;
+  background-image: url("/image.png"); 
+  background-size: contain;
+  background-position: center;
+  border-radius: 20px;
+  margin-left: 400px;
+  margin-top: 20px;
+  text-align: center;
+  color: #000;
+
+}
+.page p{
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+.page p1{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -50px;
+}
+
+
+.page .buttons{
+   gap:10px;
+   margin-top: 40px;
+   margin-left: 50px;
+   color: #000;
+}
+.page .login{
+   width: 100px;
+  padding: 10px;
+  background-color:white;
+  margin-right: 20px;
+ border-radius: 20px;
+}
+.page .signup{
+   width: 100px; 
+  padding: 10px;
+  background-color:white;
+  border-radius: 20px;
+}
+
+
+
+
+.page .banner{
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    margin-top: -80px;
+    margin-left: -43px;
+}
+.page .banner .slider{
+    margin-top: 50px;
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    top: 10%;
+    left: calc(50% - 100px);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    animation: autoRun 30s linear infinite;
+    z-index: 2;
+}
+@keyframes autoRun{
+    from{
+        transform: perspective(1000px) rotateX(-10deg) rotateY(0deg);
+    }to{
+        transform: perspective(1000px) rotateX(-10deg) rotateY(360deg);
+    }
+}
+
+.page .banner .slider .item{
+    position: absolute;
+    inset: 0 0 0 0;
+    transform: 
+        rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+        translateZ(550px);
+}
+.page .banner .slider .item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.page .banner .content{
+    
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1200px, 100vw);
+    height: 400px;
+    padding-bottom: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    
+    position: absolute;
+    
+}
+.page .banner .content h1{
+    font-family:  "Arbutus Slab", serif;
+    font-size: 6em;
+    line-height: 1em;
+    color: #25283B;
+    position: relative;
+}
+.page .banner .content h1::after{
+    position: absolute;
+    inset: 0 0 0 0;
+    content: attr(data-content);
+    z-index: 2;
+    -webkit-text-stroke: 2px #d2d2d2;
+    color: transparent;
+}
+
+.page .banner .content h2{
+    font-size: 3em;
+}
+
+
+@media screen and (max-width: 1023px) {
+    .banner .slider{
+        width: 300px;
+        height: 300px;
+        left: calc(50% - 80px);
+    }
+    .banner .slider .item{
+        transform: 
+            rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+            translateZ(300px);
+    }
+    .banner .content h1{
+        text-align: center;
+        width: 100%;
+        text-shadow: 0 10px 20px #000;
+        font-size: 7em;
+    }
+}
+@media screen and (max-width: 767px) {
+    .banner .slider{
+        width: 100px;
+        height: 200px;
+        left: calc(50% - 50px);
+    }
+    .banner .slider .item{
+        transform: 
+            rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+            translateZ(180px);
+    }
+    .banner .content h1{
+        font-size: 5em;
+    }
+}
+@media screen and (max-width: 768px) {
+
+  .page .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page .heading {
+    width: 90%;
+    height: auto;
+    margin: 20px auto;
+    padding: 5px;
+    background-size: cover;
+  }
+
+  .page p {
+    font-size: 40px;
+  }
+
+  .page p1 {
+    font-size: 20px;
+  }
+
+  .page .buttons {
+    margin-top: 3px ;
+    display: flex;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 768px) {
+
+  .page .banner {
+    margin-left: 0;
+    margin-top: -60px;
+    height: 80vh;
+  }
+
+  .page .banner .slider {
+    width: 160px;
+    height: 160px;
+    left: 35%;
+    transform: translateX(-50%) perspective(800px);
+  }
+
+  .page .banner .slider .item {
+    transform:
+      rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+      translateZ(200px);
+  }
+}
+@media screen and (max-width: 768px) {
+
+  .page .banner .content {
+    height: auto;
+    padding-bottom: 150px;
+    justify-content: center;
+  }
+
+  .page .banner .content h1 {
+    font-size: 2.8em;
+    text-align: center;
+    line-height: 1.2em;
+  }
+}

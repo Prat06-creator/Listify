@@ -1,0 +1,11 @@
+.cursor-glow {
+  background:
+    radial-gradient(
+      300px at var(--x, 30%) var(--y, 30%),
+      rgba(241, 229, 5, 0.96),
+      rgb(4, 238, 39),
+      transparent 50%
+    );
+  filter: blur(40px);
+  mix-blend-mode: screen;
+}
