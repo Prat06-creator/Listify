@@ -28,6 +28,9 @@ app.use("/api/wishboard",wishboardRoutes)
 app.use("/api/braindump",brainDumpRoutes)
 app.use("/api/budgettracker",budgetTrackerRoutes)
 app.use("/api/ai", aiRoutes);
+app.get("/", (req, res) => {
+  res.send("Listify Backend is Running 🚀");
+});
 app.listen(PORT,()=>{
     connectDb();
     console.log(`Server is running ${PORT}`);
