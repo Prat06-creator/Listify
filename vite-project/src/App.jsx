@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 import ToDoList from './page/todolist/ToDoList.jsx';
 import BrainDump from './page/brainDump.jsx/brainDump.jsx';
 import BudgetTracker from './page/budgetTracker/budgetTracker.jsx';
-import WishBoard from './page/wishBoard/wishBoard.jsx';
+import WishBoard from './page/wishBoard/wishboard.jsx';
 import Footer from "./components/Footer";
 const App=()=> {
   
