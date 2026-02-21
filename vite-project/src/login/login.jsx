@@ -21,8 +21,11 @@ function Login() {
   }
 
     try{
+      console.log("📤 Sending signup request:", { email, username });
       const res = await signup(email,username);
+      console.log("✅ Signup response:", res);
       if (res.isUserAlreadyExists){
+        console.log("🔑 User exists, logging in...");
         await login(email)
         navigate("/dashboard")
       }else{
@@ -30,7 +33,7 @@ function Login() {
       }
     }catch(error){
       console.log(error)
-      setError(error.response?.data?.message || "❌ Signup failed. Please try again.");
+      setError(error.response?.data?.message || error.response?.data?.error || "❌ Signup failed. Please try again.");
     }
   }
 
