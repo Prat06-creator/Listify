@@ -2,7 +2,6 @@ import {create} from "zustand";
 import { persist } from "zustand/middleware";
 import axios from "axios";
 const API_URL=import.meta.env.VITE_BACKEND_URL + "/api/auth"
-// "http://localhost:5000/api/auth"
 axios.defaults.withCredentials=true
 export const useAuthStore= create(persist((set,get)=>({
     user:null,
@@ -18,7 +17,9 @@ export const useAuthStore= create(persist((set,get)=>({
         console.log("👉 Signing up with:", { email, username }); 
         set({isLoading:true, error:null})
         try{
-            const response = await axios.post(`${API_URL}/signup`, {email,username});
+            const response = await axios.post(`${API_URL}/signup`, {email,username},
+              {headers:{"Content-Type":"application/json"},withCredentials:true}
+            );
             set ({ isLoading:false, email
             })
             return response.data
