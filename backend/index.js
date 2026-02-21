@@ -18,19 +18,21 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://listify-1-a3fy.onrender.com"
 ];
-
-app.use(cors({
+const corsOptions = {
   origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // allow non-browser requests (like Postman)
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE","OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
-}));
+};
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.options("*", cors(corsOptions));
 app.use(express.json({limit:"50mb"}));
 app.use(express.urlencoded({limit:"50mb",extended:true}));
