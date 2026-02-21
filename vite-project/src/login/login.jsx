@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import { useAuthStore } from "../store/authStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { set } from "mongoose";
+
 function Login() {
   const [isEmailActive, setEmailActive] = useState(true);
   const [email, setEmail] = useState("");
