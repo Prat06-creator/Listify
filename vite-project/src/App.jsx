@@ -3,6 +3,7 @@ import {createBrowserRouter,RouterProvider} from "react-router-dom";
 import Landing from './landing_page/landing'; 
 import {Routes, Route} from 'react-router-dom'
 import Login from './login/login';
+import Signup from './login/signup';
 import EmailAuthentication from './login/emailAuthentication.jsx';
 import Dashboard from './page/dashboard/dashboard.jsx';
 import Final from './page/stickynote/final.jsx';
@@ -22,6 +23,7 @@ const App=()=> {
       <Routes>
         <Route path='/' element={<Landing/>}/>
         <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<Signup/>}/>
        <Route path ='/emailAuthentication' element={<EmailAuthentication/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/todolist' element={<ToDoList/>}/>
