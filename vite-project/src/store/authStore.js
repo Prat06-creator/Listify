@@ -37,7 +37,7 @@ verifyEmail: async (code)=>{
             console.log("👉 Email being used for verification:", email);
 console.log("👉 Code being used:", code);
              const response = await axios.post(`${API_URL}/emailAuthentication`, {email,code},
-                {withCredentials:true}
+               { headers: { "Content-Type": "application/json" }, withCredentials: true }
              );
              set ({user:response.data.user,
                isAuthenticated:true, isLoading:false, email})
@@ -52,7 +52,9 @@ console.log("👉 Code being used:", code);
 login: async (email) => {
   set({ isLoading: true, error: null });
   try {
-    const res = await axios.post(`${API_URL}/login`, { email });
+    const res = await axios.post(`${API_URL}/login`, { email },
+      { headers: { "Content-Type": "application/json" }, withCredentials: true }
+    );
     set({
       user: res.data.user,
       isAuthenticated: true,
@@ -69,16 +71,21 @@ login: async (email) => {
 },
 
 getUserProfile: async () => {
-  set({ isCheckingAuth: true });
+  set({  error: null, isLoading: true });
   try {
-    const res = await axios.get(`${API_URL}/profile`);
+    const res = await axios.get(`${API_URL}/profile`,
+      {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+    );
     set({
       user: res.data.user,
       isAuthenticated: true,
-      isCheckingAuth: false,
+      isLoading: false,
     });
   } catch (error) {
-    set({ isAuthenticated: false, isCheckingAuth: false });
+    set({ isAuthenticated: false, isLoading: false });
   }
 }}),
 {

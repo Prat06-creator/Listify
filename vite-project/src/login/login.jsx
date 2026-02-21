@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import {useNavigate} from 'react-router-dom'
 import { useAuthStore } from "../store/authStore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 function Login() {
+  const navigate=useNavigate()
+  const {token,signup, login}=useAuthStore()
   const [isEmailActive, setEmailActive] = useState(true);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const {token,signup, login}=useAuthStore()
   const [error,setError]=useState("")
  
   const handleSignup=async (e)=>{
@@ -37,7 +36,7 @@ function Login() {
     }
   }
 
-  const navigate=useNavigate()
+  
   const toggleForm = () => {
     setEmailActive((prev) => !prev);
   };
