@@ -11,7 +11,7 @@ import wishboardRoutes from "./routes/wishboard.router.js";
 import brainDumpRoutes from "./routes/brainDump.js";
 import budgetTrackerRoutes from "./routes/budgetTracker.router.js";
 import aiRoutes from "./routes/ai.router.js";
-dotenv.config({path:("./backend/.env")});
+dotenv.config();
 const app=express();
 const PORT = process.env.PORT || 5000;
 app.use(cors({
