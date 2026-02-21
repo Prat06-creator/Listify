@@ -5,8 +5,6 @@ import { BoardSelector } from './boardSelector';
 import { BoardCanvas } from './boardCanvas';
 import { getRandomColor } from './constants/color';
 import { useStickyStore } from '../../store/stickyStore.js';
-import { set } from 'mongoose';
-
 
 const Final = () => {
 const {getAllBoards,boardChange, boards, setBoards, createBoard, deleteBoard, renameBoard, createNote, deleteNote, updateNote, createConnection, deleteConnection, currentBoardId, setCurrentBoardId} = useStickyStore();
