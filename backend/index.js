@@ -36,13 +36,17 @@ app.options("*", cors(corsOptions));
 app.use(express.json({limit:"50mb"}));
 app.use(express.urlencoded({limit:"50mb",extended:true}));
 app.use(cookieParser())
-app.use("/api/auth",authRoutes);
-app.use ("/api/sticky",stickyRoutes)
-app.use ("/api/todo",todoRoutes)
-app.use("/api/wishboard",wishboardRoutes)
-app.use("/api/braindump",brainDumpRoutes)
-app.use("/api/budgettracker",budgetTrackerRoutes)
-app.use("/api/ai", aiRoutes);
+function mountRouter(path, router) {
+  console.log(`Mounting router at path: ${path}`);
+  app.use(path, router);
+}
+mountRouter("/api/auth", authRoutes);
+mountRouter("/api/sticky", stickyRoutes);
+mountRouter("/api/todo", todoRoutes);
+mountRouter("/api/wishboard", wishboardRoutes);
+mountRouter("/api/braindump", brainDumpRoutes);
+mountRouter("/api/budgettracker",budgetTrackerRoutes)
+mountRouter("/api/ai", aiRoutes);
 app.get("/", (req, res) => {
   res.send("Listify Backend is Running 🚀");
 });
