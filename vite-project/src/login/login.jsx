@@ -23,8 +23,8 @@ function Login() {
       console.log("📤 Sending signup request:", { email, username });
       const res = await signup(email,username);
       console.log("✅ Signup response:", res);
-      if (res.data.isUserAlreadyExists){
-        if (res.data.isVerified){
+      if (res.isUserAlreadyExists){
+        if (res.isVerified){
            await login(email)
            navigate("/dashboard")
         }else{
