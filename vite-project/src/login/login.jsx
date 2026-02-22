@@ -24,9 +24,12 @@ function Login() {
       const res = await signup(email,username);
       console.log("✅ Signup response:", res);
       if (res.isUserAlreadyExists){
-        console.log("🔑 User exists, logging in...");
-        await login(email)
-        navigate("/dashboard")
+        if (res.isVerified){
+           await login(email)
+           navigate("/dashboard")
+        }else{
+          navigate("/emailAuthentication")
+        }       
       }else{
         navigate("/emailAuthentication")
       }
@@ -35,8 +38,6 @@ function Login() {
       setError(error.response?.data?.message || error.response?.data?.error || "❌ Signup failed. Please try again.");
     }
   }
-
-  
   const toggleForm = () => {
     setEmailActive((prev) => !prev);
   };

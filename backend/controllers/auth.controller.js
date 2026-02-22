@@ -6,8 +6,6 @@ import transporter from '../config/nodemailer.js';
 import generateEmailTemplate from '../config/emailTemplates.js';
 import jwt from 'jsonwebtoken';
 dotenv.config();
-
-
 export const signup=async(req,res)=>{
      console.log("📨 Received signup request:", req.body);
     const {email,username}=req.body;
@@ -71,10 +69,10 @@ export const signup=async(req,res)=>{
 }
 
 export const verifyEmail = async(req,res)=>{
-    const {code}=req.body;
+    const {email,code}=req.body;
     try {
         const user=await User.findOne({
-           
+           email,
             verificationToken : code,
             verificationTokenExpiresAt:{$gt:Date.now()},
         });
@@ -90,6 +88,7 @@ export const verifyEmail = async(req,res)=>{
         user.verificationToken=undefined; //once user is logged in no need of storing in database so undefined
         user.verificationTokenExpiresAt=undefined;
         await user.save(); //updates value and stores in database
+        generateTokenAndSetCookies(res, user._id);
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
@@ -136,26 +135,21 @@ export const getUserProfile = async (req, res) => {
 };
 export const login = async (req, res) => {
   const { email } = req.body;
-
   try {
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({
         success: false,
         message: "User not found. Please sign up.",
       });
     }
-
     if (!user.isVerified) {
       return res.status(401).json({
         success: false,
         message: "Please verify your email first",
       });
     }
-
     generateTokenAndSetCookies(res, user._id);
-
     res.status(200).json({
       success: true,
       message: "Login successful",

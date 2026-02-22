@@ -21,7 +21,7 @@ function Landing() {
         </div>
         <div className="buttons">
           <button className="login" onClick={handleClick}>LOG-IN</button>
-          <button className="signup" onClick={handleSignup}>SIGN-UP</button>
+          <button className="signup" onClick={handleClick}>SIGN-UP</button>
         </div>
       </div>
 

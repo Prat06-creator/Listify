@@ -50,6 +50,9 @@ mountRouter("/api/ai", aiRoutes);
 app.get("/", (req, res) => {
   res.send("Listify Backend is Running 🚀");
 });
+app.use((req, res) => {
+  res.status(404).send("404 page");
+});
 app.listen(PORT,()=>{
     connectDb();
     console.log(`Server is running ${PORT}`);

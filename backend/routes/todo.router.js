@@ -5,13 +5,20 @@ import { addMonthlyGoal,deleteMonthlyGoal,getToDoList,  updateMonthlyGoal, addWe
 deleteEvent
 } from '../controllers/todo.controller.js';
 const router = express.Router();
-function safeRoute(method, path, handler) {
+function safeRoute(method, path, ...handlers) {
   if (!path || typeof path !== "string") {
     console.error(`🚨 Invalid route detected: method=${method}, path=${path}`);
-    return; // skip attaching invalid routes
+    return;
   }
+
+  if (!router[method]) {
+    console.error(`🚨 Invalid HTTP method: ${method}`);
+    return;
+  }
+
   console.log(`Registering route: ${method.toUpperCase()} ${path}`);
-  router[method](path, handler);
+
+  router[method](path, ...handlers);
 }
 safeRoute("get","/todolist",authMiddleware, getToDoList) 
 safeRoute("post","/todolist/:todoId/monthly",authMiddleware, addMonthlyGoal) //tested

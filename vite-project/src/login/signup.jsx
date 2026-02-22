@@ -84,7 +84,7 @@ function Signup() {
           <p className="text-red-500 text-sm font-semibold text-center -mt-2">{error}</p>
         )}
                 <button type="submit" className="bg-white text-black py-2 rounded-md"
-                  onClick={handleSignup}
+                  onSubmit={handleSignup}
                   >Send Code</button>
                 
               </form>
