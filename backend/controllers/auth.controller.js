@@ -19,7 +19,8 @@ export const signup=async(req,res)=>{
             return res.status(200).json({
               success:true, 
               message: "User already exists",
-            isUserAlreadyExists:true,});
+            isUserAlreadyExists:true,
+            isVerified:userAlreadyExists.isVerified,});
         }
         const verificationToken=Math.floor(100000+Math.random()*900000).toString();
          const user= new User(
@@ -69,7 +70,7 @@ export const signup=async(req,res)=>{
 }
 
 export const verifyEmail = async(req,res)=>{
-    const {email,code}=req.body;
+    const {email, code}=req.body;
     try {
         const user=await User.findOne({
            email,
