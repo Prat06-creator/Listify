@@ -16,49 +16,75 @@ export const signup=async(req,res)=>{
         const userAlreadyExists=await User.findOne({email});
         console.log("User already exists",userAlreadyExists)
         if (userAlreadyExists){
-            return res.status(200).json({
-              success:true, 
-              message: "User already exists",
-            isUserAlreadyExists:true,
-            isVerified:userAlreadyExists.isVerified,});
-        }
-        const verificationToken=Math.floor(100000+Math.random()*900000).toString();
-         const user= new User(
-            {
-              email,
-              username, 
-              verificationToken,
-              verificationTokenExpiresAt:Date.now()+24*60*60*1000,
-            }
-         )
-        await user.save(); //saves the user to the database
-        //jwt
-        generateTokenAndSetCookies(res,user._id,username)
 
-        const emailHTML=generateEmailTemplate(username,verificationToken);
+  if (!userAlreadyExists.isVerified) {
+    // generate new token
+    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
-        const mailOptions={
-            from : process.env.SENDER_EMAIL,
-            to:email,
-            subject:"Email verification code",
-            html:emailHTML,
-        }
-        try {
-            await transporter.sendMail(mailOptions);
-            console.log("Email sent successfully");
-        } catch (error) {
-            console.error("Error sending email:", error);
-        }
+    userAlreadyExists.verificationToken = verificationToken;
+    userAlreadyExists.verificationTokenExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
 
-       res.status(201).json({
-        success:true,
-        message: "Signup successful. Please verify email.",
-        isUserAlreadyExists:false,
-        user:{ 
-            email:email,
-            username:username,
-        },
-       })
+    await userAlreadyExists.save();
+
+    // send email again here
+    await transporter.sendMail({
+      from: process.env.SENDER_EMAIL,
+      to: email,
+      subject: "Email verification code",
+      html: generateEmailTemplate(userAlreadyExists.username, verificationToken)
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "User already exists",
+    isUserAlreadyExists: true,
+    isVerified: userAlreadyExists.isVerified,
+  });
+        }
+      //       return res.status(200).json({
+      //         success:true, 
+      //         message: "User already exists",
+      //       isUserAlreadyExists:true,
+      //       isVerified:userAlreadyExists.isVerified,});
+      //   }
+      //   const verificationToken=Math.floor(100000+Math.random()*900000).toString();
+      //    const user= new User(
+      //       {
+      //         email,
+      //         username, 
+      //         verificationToken,
+      //         verificationTokenExpiresAt:Date.now()+24*60*60*1000,
+      //       }
+      //    )
+      //   await user.save(); //saves the user to the database
+      //   //jwt
+      //   generateTokenAndSetCookies(res,user._id,username)
+
+      //   const emailHTML=generateEmailTemplate(username,verificationToken);
+
+      //   const mailOptions={
+      //       from : process.env.SENDER_EMAIL,
+      //       to:email,
+      //       subject:"Email verification code",
+      //       html:emailHTML,
+      //   }
+      //   try {
+      //       await transporter.sendMail(mailOptions);
+      //       console.log("Email sent successfully");
+      //   } catch (error) {
+      //       console.error("Error sending email:", error);
+      //   }
+
+      //  res.status(201).json({
+      //   success:true,
+      //   message: "Signup successful. Please verify email.",
+      //   isUserAlreadyExists:false,
+      //   user:{ 
+      //       email:email,
+      //       username:username,
+      //   },
+      //  })
        
 
 
