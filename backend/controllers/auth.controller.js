@@ -6,95 +6,53 @@ import transporter from '../config/nodemailer.js';
 import generateEmailTemplate from '../config/emailTemplates.js';
 import jwt from 'jsonwebtoken';
 dotenv.config();
-export const signup=async(req,res)=>{
-     console.log("📨 Received signup request:", req.body);
-    const {email,username}=req.body;
-    try {
-        if (!email||!username){
-            throw new Error("All fields are required");
-        }
-        const userAlreadyExists=await User.findOne({email});
-        console.log("User already exists",userAlreadyExists)
-        if (userAlreadyExists){
+export const signup = async (req, res) => {
+  console.log("📨 Received signup request:", req.body);
 
-  if (!userAlreadyExists.isVerified) {
-    // generate new token
-    const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+  const { email, username } = req.body;
 
-    userAlreadyExists.verificationToken = verificationToken;
-    userAlreadyExists.verificationTokenExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
+  try {
+    if (!email || !username) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
+    }
 
-    await userAlreadyExists.save();
-    console.log("About to send email");
-    // send email again here
-    await transporter.sendMail({
-      from: process.env.SENDER_EMAIL,
-      to: email,
-      subject: "Email verification code",
-      html: generateEmailTemplate(userAlreadyExists.username, verificationToken)
+    const userAlreadyExists = await User.findOne({ email });
+
+    console.log("User already exists:", userAlreadyExists);
+
+    if (userAlreadyExists) {
+      return res.status(200).json({
+        success: true,
+        message: "User already exists",
+        isUserAlreadyExists: true,
+        isVerified: userAlreadyExists.isVerified
+      });
+    }
+
+    // create new user
+    const newUser = await User.create({
+      email,
+      username,
+      isVerified: false
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "User created",
+      isUserAlreadyExists: false
+    });
+
+  } catch (error) {
+    console.log("Signup error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
     });
   }
-
-  return res.status(200).json({
-    success: true,
-    message: "User already exists",
-    isUserAlreadyExists: true,
-    isVerified: userAlreadyExists.isVerified,
-  });
-        }
-      //       return res.status(200).json({
-      //         success:true, 
-      //         message: "User already exists",
-      //       isUserAlreadyExists:true,
-      //       isVerified:userAlreadyExists.isVerified,});
-      //   }
-      //   const verificationToken=Math.floor(100000+Math.random()*900000).toString();
-      //    const user= new User(
-      //       {
-      //         email,
-      //         username, 
-      //         verificationToken,
-      //         verificationTokenExpiresAt:Date.now()+24*60*60*1000,
-      //       }
-      //    )
-      //   await user.save(); //saves the user to the database
-      //   //jwt
-      //   generateTokenAndSetCookies(res,user._id,username)
-
-      //   const emailHTML=generateEmailTemplate(username,verificationToken);
-
-      //   const mailOptions={
-      //       from : process.env.SENDER_EMAIL,
-      //       to:email,
-      //       subject:"Email verification code",
-      //       html:emailHTML,
-      //   }
-      //   try {
-      //       await transporter.sendMail(mailOptions);
-      //       console.log("Email sent successfully");
-      //   } catch (error) {
-      //       console.error("Error sending email:", error);
-      //   }
-
-      //  res.status(201).json({
-      //   success:true,
-      //   message: "Signup successful. Please verify email.",
-      //   isUserAlreadyExists:false,
-      //   user:{ 
-      //       email:email,
-      //       username:username,
-      //   },
-      //  })
-       
-
-
-    } catch (error) {
-        console.error("Error registering user:", error);
-        res.status(400).json({success:false,message:error.message})
-        
-    }
-}
-
+};
 export const verifyEmail = async(req,res)=>{
     const {email, code}=req.body;
     try {
