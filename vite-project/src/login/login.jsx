@@ -67,7 +67,8 @@ function Login() {
          
             <>
               <h2 className="text-2xl font-bold mb-6">Continue with Email</h2>
-              <form className="flex flex-col gap-4 w-full max-w-100">
+              <form 
+               onSubmit={handleSignup} className="flex flex-col gap-4 w-full max-w-100">
                 <input className="border p-3 rounded-md text-gray-800" type="text" placeholder="Username" value={username}
                   onChange={(e) => setUsername(e.target.value)} />
                 <input className="border p-3 rounded-md" type="email" placeholder="Email" value={email}
@@ -76,7 +77,7 @@ function Login() {
           <p className="text-red-500 text-sm font-semibold text-center -mt-2">{error}</p>
         )}
                 <button type="submit" className="bg-white text-black py-2 rounded-md"
-                  onSubmit={handleSignup}
+                 
                   >Send Code</button>
                 
               </form>
