@@ -36,7 +36,7 @@ const verificationToken = Math.floor(100000 + Math.random() * 900000).toString()
       verificationTokenExpiresAt: Date.now() + 10 * 60 * 1000 // 10 minutes
     });
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.SENDER_EMAIL,
       to: email,
       subject: "Verify your email",
       html: generateEmailTemplate(username, verificationToken)
