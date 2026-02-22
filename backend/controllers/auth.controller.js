@@ -8,9 +8,7 @@ import jwt from 'jsonwebtoken';
 dotenv.config();
 export const signup = async (req, res) => {
   console.log("📨 Received signup request:", req.body);
-
   const { email, username } = req.body;
-
   try {
     if (!email || !username) {
       return res.status(400).json({
@@ -18,11 +16,8 @@ export const signup = async (req, res) => {
         message: "All fields are required"
       });
     }
-
     const userAlreadyExists = await User.findOne({ email });
-
     console.log("User already exists:", userAlreadyExists);
-
     if (userAlreadyExists) {
       return res.status(200).json({
         success: true,
@@ -31,14 +26,21 @@ export const signup = async (req, res) => {
         isVerified: userAlreadyExists.isVerified
       });
     }
-
+const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
     // create new user
     const newUser = await User.create({
       email,
       username,
-      isVerified: false
+      isVerified: false,
+      verificationToken,
+      verificationTokenExpiresAt: Date.now() + 10 * 60 * 1000 // 10 minutes
     });
-
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Verify your email",
+      html: generateEmailTemplate(username, verificationToken)
+    });
     return res.status(201).json({
       success: true,
       message: "User created",
