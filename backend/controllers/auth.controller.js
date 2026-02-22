@@ -25,7 +25,7 @@ export const signup=async(req,res)=>{
     userAlreadyExists.verificationTokenExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
 
     await userAlreadyExists.save();
-
+    console.log("About to send email");
     // send email again here
     await transporter.sendMail({
       from: process.env.SENDER_EMAIL,
