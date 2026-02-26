@@ -50,7 +50,7 @@ Listify/
 
 Installation and Setup
 Clone the Repository
-git clone https://github.com/your-username/listify.git
+git clone https://github.com/Prat06-creator/listify.git
 
 Frontend Setup
 cd client
